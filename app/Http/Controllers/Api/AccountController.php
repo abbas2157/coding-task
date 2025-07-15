@@ -24,12 +24,13 @@ class AccountController extends Controller
             if (!Auth::attempt($credentials)) {
                 return $this->sendError('Invalid login credentials', $credentials, 200);
             }
+
             $success['user'] = Auth::user();
             if(is_null($success['user']->email_verified_at)) {
                 return $this->sendResponse($success, 'User not verified!');
             }
-            $success['token'] =  $success['user']->createToken('MyApp')->plainTextToken;
 
+            $success['token'] =  $success['user']->createToken('MyApp')->plainTextToken;
             return $this->sendResponse($success, 'User Login successfully.');
         } catch (Exception $e) {
             return $this->sendError('Something Went Wrong.', $e->getMessage(), 200);
