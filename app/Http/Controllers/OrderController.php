@@ -25,6 +25,7 @@ class OrderController extends Controller
             
             $order = new Order;
             $order->user_id = auth()->user()->id;
+            $order->order_no = rand(1000,9999);
             $order->save();
 
             foreach($carts as $item) {

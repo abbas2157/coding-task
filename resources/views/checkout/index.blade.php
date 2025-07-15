@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('title')
-<title>Home | My Task</title>
+<title>Checkout | My Task</title>
 @stop
 @section('content')
 <!-- Product -->

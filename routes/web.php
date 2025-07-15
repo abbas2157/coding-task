@@ -21,3 +21,9 @@ Route::group(['middleware' => ['auth']], function(){
         Route::get('perform', [App\Http\Controllers\OrderController::class, 'checkout_perform'])->name('checkout.perform');
     });
 });
+
+//Admin Routes
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
+    Route::get('/', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.orders');
+    Route::post('{order}', [App\Http\Controllers\Admin\OrderController::class, 'change_status'])->name('admin.orders');
+});

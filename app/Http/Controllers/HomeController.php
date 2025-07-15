@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Cart;
+use App\Models\{Product, Cart};
 
 class HomeController extends Controller
 {
@@ -13,6 +12,7 @@ class HomeController extends Controller
         return view('home',compact('products'));
     }
     public function add_to_cart() {
+        
         $product_id = request()->product_id;
         $product = Product::findOrFail($product_id);
         try {
@@ -32,7 +32,6 @@ class HomeController extends Controller
             $validator['success'] = 'Added to cart';
             return back()->withErrors($validator);
         } catch (\Exception $e) {
-            DB::rollBack();
             $validator['error'] = $e->getMessage();
             return back()->withErrors($validator);
         }

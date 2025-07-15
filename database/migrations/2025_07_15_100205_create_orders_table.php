@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('order_no');
             $table->integer('user_id');
-            $table->enum('status',['Pending', 'Deleivered'])->default('Pending');
+            $table->enum('status',['Pending', 'Processing', 'Completed', 'Cancelled'])->default('Pending');
             $table->timestamps();
         });
     }

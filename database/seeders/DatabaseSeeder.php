@@ -25,6 +25,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ]);
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'admin@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'role' => 'admin',
+            'remember_token' => Str::random(10),
+        ]);
 
         for($i=1; $i <= 8; $i++){
             Product::create([
