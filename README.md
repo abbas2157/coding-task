@@ -7,4 +7,5 @@
 - composer update
 - Create .env and made database changes
 - Add ASSET_URL in .env file with /public
+- Run command for migrations 'php artisan migrate --seed'
 - else i will explain in video
