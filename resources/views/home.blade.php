@@ -13,10 +13,10 @@
 				</h3>
 			</div>
             @if ($errors->has('success'))
-                <div class="text-success text-left mt-3">{{ $errors->first('success') }}</div>
+                <div class="alert alert-success mt-3">{{ $errors->first('success') }}</div>
             @endif
             @if ($errors->has('error'))
-                <div class="text-danger text-left mt-3">{{ $errors->first('error') }}</div>
+                <div class="alert alert-danger mt-3">{{ $errors->first('error') }}</div>
             @endif
 			<div class="row isotope-grid">
                 @if($products->isNotEmpty())
@@ -32,7 +32,21 @@
                                             ${{ $item->price ?? '0' }}
                                         </span>
                                         @auth
-                                            <a href="{{ route('add_to_cart',$item->id) }}">Add to Cart</a>
+                                            <form action="{{ route('add_to_cart') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $item->id ?? 0 }}">
+                                                <div class="form-group">
+                                                    <select name="quantity" id="quantity" required>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
+                                                </div>
+                                                <button class="btn btn-info" type="submit">Add to Cart</button>
+                                            </form>
+                                            
                                         @endauth
                                     </div>
                                 </div>
@@ -44,12 +58,8 @@
                     <p>No Item Found</p>
                 @endif
 			</div>
-
-			<!-- Load more -->
-			<div class="flex-c-m flex-w w-full p-t-45">
-				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Load More
-				</a>
+            <div class="flex-c-m flex-w w-full p-t-45">
+                
 			</div>
 		</div>
 	</section>

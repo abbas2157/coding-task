@@ -12,19 +12,22 @@ class HomeController extends Controller
         $products = Product::get();
         return view('home',compact('products'));
     }
-    public function add_to_cart($product_id) {
+    public function add_to_cart() {
+        $product_id = request()->product_id;
         $product = Product::findOrFail($product_id);
-
-        $cart = Cart::where(['product_id'=> $product_id, 'status' => 'Pending'])->first();
-        if($cart) {
-            $validator['error'] = 'Already added to cart.';
-            return back()->withErrors($validator);
-        }
         try {
-            $cart = new Cart;
-            $cart->user_id = auth()->user()->id;
-            $cart->product_id = $product_id;
-            $cart->save();
+            $cart = Cart::where(['product_id'=> $product_id, 'status' => 'Pending'])->first();
+            if($cart) {
+                $cart->quantity = request()->quantity + $cart->quantity;
+                $cart->save();
+            }
+            else {
+                $cart = new Cart;
+                $cart->user_id = auth()->user()->id;
+                $cart->product_id = $product_id;
+                $cart->quantity = request()->quantity;
+                $cart->save();
+            }
 
             $validator['success'] = 'Added to cart';
             return back()->withErrors($validator);

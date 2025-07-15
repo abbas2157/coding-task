@@ -31,4 +31,9 @@ class AuthController extends Controller
             return back()->withErrors($validator);
         }
     }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
 }

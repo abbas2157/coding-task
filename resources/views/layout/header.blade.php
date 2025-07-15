@@ -9,20 +9,36 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
                             <li>
-								<a href="{{ route('home') }}">Home</a>
-							</li>
-
-							<li>
-								<a href="product.html">Shop</a>
+								<a href="{{ route('home') }}" class="btn btn-warning p-2">Home</a>
 							</li>
 						</ul>
 					</div>
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
 						<a href="{{ route('checkout') }}">
-							<div class="icon-header-item ">
+							@php
+								$cart_count = 0;
+							@endphp
+							@auth
+								@php
+									$cart_count = \App\Models\Cart::where(['user_id' => auth()->user()->id, 'status' => "Pending"])->count();
+								@endphp
+							@endauth
+							
+							<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart pr-3" data-notify="{{ $cart_count ?? 0 }}">
 								<i class="zmdi zmdi-shopping-cart"></i>
 							</div>
+
+							@auth
+								<a href="{{ route('logout') }}" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+									Logout
+								</a>
+							@endauth
+							@guest
+								<a href="{{ route('login') }}" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+									Login
+								</a>
+							@endguest
 						</a>
 					</div>
 				</nav>
@@ -59,11 +75,6 @@
 				<li>
 					<a href="{{ route('home') }}">Home</a>
 				</li>
-
-				<li>
-					<a href="product.html">Shop</a>
-				</li>
-
 			</ul>
 		</div>
 	</header>

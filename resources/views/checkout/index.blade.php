@@ -13,10 +13,10 @@
 				</h3>
 			</div>
             @if ($errors->has('success'))
-                <div class="text-success text-left mt-3">{{ $errors->first('success') }}</div>
+                <div class="alert alert-success mt-3">{{ $errors->first('success') }}</div>
             @endif
             @if ($errors->has('error'))
-                <div class="text-danger text-left mt-3">{{ $errors->first('error') }}</div>
+                <div class="alert alert-danger mt-3">{{ $errors->first('error') }}</div>
             @endif
 			<div class="row isotope-grid">
                 @if($carts->isNotEmpty())
@@ -30,6 +30,9 @@
                                         </a>
                                         <span class="stext-105 cl3">
                                             ${{ $item->product->price ?? '0' }}
+                                        </span>
+                                        <span class="stext-105 cl3">
+                                            Total Quantity : {{ $item->quantity ?? '0' }}
                                         </span>
                                         @auth
                                             <a href="{{ route('remove_from_cart',$item->id) }}">Remove from Cart</a>
