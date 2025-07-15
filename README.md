@@ -9,4 +9,5 @@
 - Add ASSET_URL in .env file with /public
 - Run command for migrations 'php artisan migrate --seed'
 - For User Login 'Email : test@example.com Password : password'
+- For Admin Login 'Email : admin@example.com Password : password'
 - else i will explain in video
