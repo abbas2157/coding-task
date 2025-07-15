@@ -16,12 +16,19 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email'
         ]);
-        
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect('/');
+        try {
+            
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                return redirect('/');
+            }
+            $validator['error'] = 'Your details are incorrect.';
+            return redirect("login")->withErrors($validator);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $validator['error'] = $e->getMessage();
+            return back()->withErrors($validator);
         }
-        $validator['error'] = 'Your details are incorrect.';
-        return redirect("login")->withErrors($validator);
     }
 }
